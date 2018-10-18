@@ -14,8 +14,10 @@ router.get('/', (req, res) => {
  * Add an item for the logged in user to the shelf
  */
 router.post('/', (req, res) => {
+    console.log(req.user);
+    
         pool.query(`INSERT INTO "item" ("description", "image_url", "person_id")
-        VALUES ($1, $2, $3)`, [req.body.description, req.body.image_url, 1])
+        VALUES ($1, $2, $3)`, [req.body.description, req.body.image_url, req.user.id])
 });
 
 
