@@ -3,6 +3,7 @@
 export const SHELF_VIEW_ACTIONS = {
     FETCH_ITEMS: 'FETCH_ITEMS',
     SET_ITEMS: 'SET_ITEMS',
+    DELETE_ITEM: 'DELETE_ITEM',
 }
 
 export const setItems = (items) => {
