@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import './userPage.css';
+import { SHELF_VIEW_ACTIONS } from '../../redux/actions/shelfViewActions'
 
 import Nav from '../../components/Nav/Nav';
 
@@ -11,16 +12,14 @@ import { triggerLogout } from '../../redux/actions/loginActions';
 // Instead of taking everything from state, we just want the user info.
 const mapStateToProps = state => ({
   user: state.user,
+  items: state.shelfView,
 });
 
 class UserPage extends Component {
 
-  state = {
-    shelfItems: []
-  }
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
-    this.getShelfItems();
+    this.props.dispatch({ type: SHELF_VIEW_ACTIONS.FETCH_ITEMS})
   }
 
   // componentDidUpdate runs after props and state have changed.
@@ -35,21 +34,6 @@ class UserPage extends Component {
     this.props.dispatch(triggerLogout());
   }
 
-  getShelfItems = () => {
-    axios.get('/api/shelf')
-      .then(response => {
-        this.setState({
-          ...this.state,
-          shelfItems: response.data,
-        })
-        console.log(response);
-      }).catch(error => {
-        console.log(error)
-      })
-  }
-
-
-
   render() {
     let content = null;
 
@@ -63,7 +47,7 @@ class UserPage extends Component {
           </h1>
 
           <div className="cardsContainer">
-            {this.state.shelfItems.map(item => {
+            {this.props.items.map(item => {
               return (<div className="card" key={item.id}>
                 <img className="imgCard" src={item.image_url} />
                 <h4>Description:</h4>
