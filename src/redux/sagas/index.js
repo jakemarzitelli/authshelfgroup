@@ -2,6 +2,7 @@ import { all } from 'redux-saga/effects';
 import userSaga from './userSaga';
 import loginSaga from './loginSaga';
 import shelfViewSaga from './shelfViewSaga';
+import shelfAddSaga from './shelfAddSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -9,5 +10,6 @@ export default function* rootSaga() {
     userSaga(),
     loginSaga(),
     // watchIncrementAsync()
+    shelfAddSaga(),
   ]);
 }
