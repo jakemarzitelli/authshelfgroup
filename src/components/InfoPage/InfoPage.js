@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
+import axios from 'axios';
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -22,15 +23,60 @@ class InfoPage extends Component {
     }
   }
 
+  state = { description: '',
+            image_url: ''
+}
+
+handleClick = (event) => {
+  event.preventDefault();
+  console.log('button working');
+  console.log(this.state);
+
+  axios({
+    method: 'POST',
+    url: '/api/shelf',
+    data: this.state
+
+  }).then((results) => {
+      this.setState({
+        description: '',
+        image_url: ''
+      })
+  }).catch(error => {
+    console.log('error posting', error);
+    
+  })
+  
+  
+}
+
+handleChangeFor = (input) => (event) => {
+     
+      this.setState({
+        [input]: event.target.value
+      })
+    
+}
+
+
+ 
+
+
   render() {
     let content = null;
 
     if (this.props.user.userName) {
       content = (
         <div>
-          <p>
-            Info Page
-          </p>
+          <h1> Shelf Info</h1>
+          <div>
+            <form onSubmit={this.handleClick}>
+            <input value={this.state.description} onChange={this.handleChangeFor('description')} placeholder="description" />
+              <input value={this.state.image_url} onChange={this.handleChangeFor('image_url')} placeholder="image" />
+              <button>Submit</button>
+
+            </form>
+          </div>
         </div>
       );
     }
