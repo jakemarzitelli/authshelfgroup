@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import './userPage.css';
-import { SHELF_VIEW_ACTIONS } from '../../redux/actions/shelfViewActions'
 
 import Nav from '../../components/Nav/Nav';
 
 import { USER_ACTIONS } from '../../redux/actions/userActions';
+import { SHELF_VIEW_ACTIONS } from '../../redux/actions/shelfViewActions'
 import { triggerLogout } from '../../redux/actions/loginActions';
 
 // Instead of taking everything from state, we just want the user info.
@@ -34,6 +34,10 @@ class UserPage extends Component {
     this.props.dispatch(triggerLogout());
   }
 
+  deleteItem = (item) => {
+    this.props.dispatch({type: SHELF_VIEW_ACTIONS.DELETE_ITEM, payload: item})
+  }
+
   render() {
     let content = null;
 
@@ -53,7 +57,7 @@ class UserPage extends Component {
                 <h4>Description:</h4>
                 <pre>{item.description}</pre>
                 <p>{item.description}</p>
-                <button>Delete Item</button>
+                <button onClick={() => this.deleteItem(item)}>Delete Item</button>
               </div>)
             })}
 

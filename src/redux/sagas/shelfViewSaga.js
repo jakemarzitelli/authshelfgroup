@@ -1,4 +1,4 @@
-import { put, takeLatest, call } from 'redux-saga/effects';
+import { put, takeEvery, call } from 'redux-saga/effects';
 import { SHELF_VIEW_ACTIONS, setItems } from '../actions/shelfViewActions';
 import axios from 'axios'
 
@@ -17,8 +17,21 @@ function* fetchItems() {
     }
   }
 
+  function* deleteItem(action) {
+    try {
+      yield call(
+        axios.delete, `/api/shelf/${action.payload.id}`);
+      yield put(
+        {type: SHELF_VIEW_ACTIONS.FETCH_ITEMS}
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   function* shelfViewSaga() {
-    yield takeLatest(SHELF_VIEW_ACTIONS.FETCH_ITEMS, fetchItems);
+    yield takeEvery(SHELF_VIEW_ACTIONS.FETCH_ITEMS, fetchItems);
+    yield takeEvery(SHELF_VIEW_ACTIONS.DELETE_ITEM, deleteItem)
   }
 
   export default shelfViewSaga; 
