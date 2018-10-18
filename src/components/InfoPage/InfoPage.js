@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
-import axios from 'axios';
+import { addItem } from '../../redux/actions/addAction';
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -29,40 +28,21 @@ class InfoPage extends Component {
 
 handleClick = (event) => {
   event.preventDefault();
-  console.log('button working');
-  console.log(this.state);
-
-  axios({
-    method: 'POST',
-    url: '/api/shelf',
-    data: this.state
-
-  }).then((results) => {
-      this.setState({
-        description: '',
-        image_url: ''
-      })
-  }).catch(error => {
-    console.log('error posting', error);
-    
+  this.props.dispatch(addItem(this.state))
+  this.setState({
+    description: '',
+    image_url: ''
   })
-  
   
 }
 
 handleChangeFor = (input) => (event) => {
-     
-      this.setState({
+    this.setState({
         [input]: event.target.value
       })
-    
-}
+  }
 
-
- 
-
-
-  render() {
+    render() {
     let content = null;
 
     if (this.props.user.userName) {
