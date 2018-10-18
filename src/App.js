@@ -12,6 +12,7 @@ import RegisterPage from './components/RegisterPage/RegisterPage';
 import UserPage from './components/UserPage/UserPage';
 import InfoPage from './components/InfoPage/InfoPage';
 import TotalPage from './components/TotalPage/TotalPage'
+import UserDetail from './components/UserDetail/UserDetail'
 
 import './styles/main.css';
 
@@ -40,6 +41,10 @@ const App = () => (
         <Route 
           path="/total"
           component={TotalPage} 
+          />
+        <Route
+          path="/:id"
+          component={UserDetail}
           />
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />

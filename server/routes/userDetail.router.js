@@ -2,14 +2,15 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    pool.query(`SELECT 
+router.get('/:id', (req, res) => {
+    pool.query(`SELECT
     "person"."id",
     "person"."username",
-    COUNT("item"."id") as "number_of_items"
-    FROM "person"
-    JOIN "item" ON "person"."id" = "item"."person_id"
-    GROUP BY "person"."id";`)
+    json_agg("item") AS "items"
+FROM "person"
+LEFT JOIN "item" ON "person"."id" = "item"."person_id"
+WHERE "person"."id" = $1
+GROUP BY "person"."id";`,[req.params.id])
     .then((result) => {
         res.send(result.rows)
     }).catch(error => {
