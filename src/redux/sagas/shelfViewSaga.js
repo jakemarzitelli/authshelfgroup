@@ -3,7 +3,7 @@ import { SHELF_VIEW_ACTIONS, setItems } from '../actions/shelfViewActions';
 import axios from 'axios'
 
 
-function* fetchUser() {
+function* fetchItems() {
     try {
       const items = yield call(
           axios.get, '/api/shelf'
@@ -17,4 +17,8 @@ function* fetchUser() {
     }
   }
 
-  export default fetchUser; 
+  function* shelfViewSaga() {
+    yield takeLatest(SHELF_VIEW_ACTIONS.FETCH_ITEMS, fetchItems);
+  }
+
+  export default shelfViewSaga; 
