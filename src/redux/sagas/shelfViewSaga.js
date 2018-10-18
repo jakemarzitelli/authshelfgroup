@@ -29,9 +29,25 @@ function* fetchItems() {
     }
   }
 
+  function* editItem(action) {
+    try{
+      yield call(
+        axios.put, `/api/shelf`, action.payload
+      )
+      console.log('in editItem in shelfViewSaga, action.payload:', action.payload);
+      yield put(
+        {type: SHELF_VIEW_ACTIONS.FETCH_ITEMS}
+      )
+    } 
+    catch (error) {
+      console.log(error); 
+    }
+  }
+
   function* shelfViewSaga() {
     yield takeEvery(SHELF_VIEW_ACTIONS.FETCH_ITEMS, fetchItems);
-    yield takeEvery(SHELF_VIEW_ACTIONS.DELETE_ITEM, deleteItem)
+    yield takeEvery(SHELF_VIEW_ACTIONS.DELETE_ITEM, deleteItem);
+    yield takeEvery(SHELF_VIEW_ACTIONS.EDIT_ITEM, editItem)
   }
 
   export default shelfViewSaga; 
