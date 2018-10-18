@@ -22,13 +22,7 @@ class UserPage extends Component {
     this.props.dispatch({ type: SHELF_VIEW_ACTIONS.FETCH_ITEMS})
   }
 
-  // componentDidUpdate runs after props and state have changed.
-  //If we arent loading the user call AND we dont have a user, kick us out to home
-  componentDidUpdate() {
-    if (!this.props.user.isLoading && this.props.user.userName === null) {
-      this.props.history.push('/home');
-    }
-  }
+  // componentDidUpdate runs after props and state have changed.  
 
   logout = () => {
     this.props.dispatch(triggerLogout());
@@ -71,6 +65,28 @@ class UserPage extends Component {
           </button>
         </div>
       );
+    } else {
+      content = (
+        <div>
+          <h1
+            id="welcome"
+          >
+            Welcome Stranger!
+          </h1>
+
+          <div className="cardsContainer">
+            {this.props.items.map(item => {
+              return (<div className="card" key={item.id}>
+                <img className="imgCard" src={item.image_url} />
+                <h4>Description:</h4>
+                <pre>{item.description}</pre>
+                <p>{item.description}</p>
+              </div>)
+            })}
+
+          </div>
+        </div>
+      )
     }
 
     return (

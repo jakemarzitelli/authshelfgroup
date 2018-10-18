@@ -100,6 +100,7 @@ class LoginPage extends Component {
             />
             <Link to="/register">Register</Link>
           </div>
+          <Link to="/user"><button>View without logging in</button></Link>
         </form>
       </div>
     );
