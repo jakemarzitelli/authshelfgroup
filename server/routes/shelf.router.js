@@ -46,7 +46,10 @@ router.put('/', (req, res) => {
     SET "description" = $1,
     "image_url" = $2
     WHERE "id" = $3;`, [req.body.description, req.body.image_url, req.body.id])
-    res.sendStatus(200, req.body)
+    .then(res.sendStatus(200))
+    .catch(error => {
+        res.sendStatus(500);
+    })    
 });
 
 

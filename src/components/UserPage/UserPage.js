@@ -46,17 +46,25 @@ class UserPage extends Component {
   }
 
   exitEditModal = (event) => {
-    if (event.target.classList.contains('modal') || event.target.classList.contains('editExitButton')){
-      this.setState({
-        editShow: false,
-        currentItemToEdit: {},
-      })
-      window.removeEventListener('click', this.exitEditModal, true)
-      console.log("in exit modal", this.state); 
-    } 
+    if (event.target.classList.contains('modal') 
+      || event.target.classList.contains('editExitButton')){
+      this.triggerExit();
+    } else if (event.target.classList.contains('submitChangeButton')){
+      this.dispatchEditItem(event)
+      this.triggerExit();
+    }
   }
 
-  changeItemDescription = (event) => {
+  triggerExit = () => {
+    this.setState({
+      editShow: false,
+      currentItemToEdit: {},
+    })
+    window.removeEventListener('click', this.exitEditModal, true)
+    console.log("in exit modal", this.state); 
+  }
+
+  dispatchEditItem = (event) => {
     event.preventDefault();
     this.props.dispatch({
       type: SHELF_VIEW_ACTIONS.EDIT_ITEM, 
@@ -65,14 +73,6 @@ class UserPage extends Component {
     console.log(this.state.currentItemToEdit)
   }
 
-  changeItemImgUrl = (event) => {
-    event.preventDefault();
-    this.props.dispatch({
-      type: SHELF_VIEW_ACTIONS.EDIT_ITEM, 
-      payload: { ...this.state.currentItemToEdit }
-     })
-    console.log(this.state.currentItemToEdit)
-  }
 
 //WORK ON THIS!
   handleChange = (event) => {
@@ -124,13 +124,13 @@ class UserPage extends Component {
               <label> Edit Image URL:
                 <input onChange={this.handleChange} name="image_url" value={this.state.currentItemToEdit.image_url} placeholder="Image URL" />
               </label>
-              <button onClick={this.changeItemImgUrl}>Submit Image Change</button>
+              <button onClick={this.dispatchEditItem} className="submitChangeButton">Submit Image Change</button>
             </form>
             <form>
               <label> Edit Description:
                 <input onChange={this.handleChange} name="description" value={this.state.currentItemToEdit.description} placeholder="Description" />
               </label>
-              <button onClick={this.changeItemDescription}>Submit Description Change</button>
+              <button onClick={this.dispatchEditItem} className="submitChangeButton">Submit Description Change</button>
               </form>
               <div>
               <button className="editExitButton">Exit</button>
