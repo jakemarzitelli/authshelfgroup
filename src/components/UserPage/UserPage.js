@@ -93,7 +93,7 @@ class UserPage extends Component {
 
           <div className="cardsContainer">
             {this.props.items.map(item => {
-              return (<div className="card" key={item.id}>
+              return (<div className="cardUser" key={item.id}>
                 <div className="imgDiv">
                 <img className="imgCardContent" alt-text="Imgae" src={item.image_url} />
                 </div>
