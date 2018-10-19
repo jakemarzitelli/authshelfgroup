@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import './userPage.css';
 
 import Nav from '../../components/Nav/Nav';
 
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import { SHELF_VIEW_ACTIONS } from '../../redux/actions/shelfViewActions'
-import { triggerLogout } from '../../redux/actions/loginActions';
 
 // Instead of taking everything from state, we just want the user info.
 const mapStateToProps = state => ({
@@ -25,10 +23,6 @@ class UserPage extends Component {
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
     this.props.dispatch({ type: SHELF_VIEW_ACTIONS.FETCH_ITEMS })
-  }
-
-  logout = () => {
-    this.props.dispatch(triggerLogout());
   }
 
   deleteItem = (item) => {
@@ -111,12 +105,6 @@ class UserPage extends Component {
 
           </div>
 
-          <p>Your ID is: {this.props.user.id}</p>
-          <button
-            onClick={this.logout}
-          >
-            Log Out
-          </button>
           { this.state.editShow && 
           <div id="id01" className="modal">
             <div className="modal-content">
