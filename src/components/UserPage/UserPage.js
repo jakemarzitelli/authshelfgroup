@@ -94,12 +94,19 @@ class UserPage extends Component {
           <div className="cardsContainer">
             {this.props.items.map(item => {
               return (<div className="card" key={item.id}>
-                <img className="imgCard" src={item.image_url} />
-                <h4>Description:</h4>
-                <pre>{item.description}</pre>
-                <p>{item.description}</p>
-                <button onClick={() => this.deleteItem(item)}>Delete Item</button>
-                <button onClick={() => this.editItemModal(item)}>Edit Item</button>
+                <div className="imgDiv">
+                <img className="imgCardContent" alt-text="Imgae" src={item.image_url} />
+                </div>
+                <div className="cardTextDiv">
+                <h4 className="cardText">Description:</h4>
+                </div>
+                <div className="cardTextDiv">
+                <p className="cardText">{item.description}</p>
+                </div>
+                <div className="cardButtonDiv">
+                <button className="cardButton" onClick={() => this.editItemModal(item)}>Edit Item</button>
+                <button className="cardButton" onClick={() => this.deleteItem(item)}>Delete Item</button>
+                </div>
               </div>)
             })}
 
