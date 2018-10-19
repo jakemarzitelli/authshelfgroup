@@ -22,6 +22,7 @@ class UserDetail extends Component {
     }
   }
 
+
   //trigger a /user call
   componentDidMount() {
     this.props.dispatch(fetchDetails(this.props.match.params.id))
@@ -39,7 +40,7 @@ class UserDetail extends Component {
     if (this.props.user.userName) {
       content = (
         <div>
-          <h1> User's Shelf Items</h1>
+          <h1 className="title"> User's Shelf Items</h1>
           <div className="cardsContainers">
           {this.props.userDetail.items.map((item) => {
             
@@ -47,7 +48,9 @@ class UserDetail extends Component {
             <div className="card" key={item.id}>
             <img className="imgCard" src={item.image_url}/>
 
-                <h2>Description: <p>{item.description}</p></h2>
+
+                <div className="infoContainer">
+                <p>Description: {item.description}</p></div>
             </div>
             )   
           })}
