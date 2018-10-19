@@ -7,11 +7,11 @@ const router = express.Router();
  */
 router.get('/', (req, res) => {
     pool.query(`SELECT * FROM "item";`)
-    .then(result => {
-        res.send(result.rows);
-    }).catch(error => {
-        console.log(error);
-    })
+        .then(result => {
+            res.send(result.rows);
+        }).catch(error => {
+            console.log(error);
+        })
 });
 
 
@@ -29,10 +29,10 @@ router.post('/', (req, res) => {
  */
 router.delete('/:id', (req, res) => {
     pool.query(`DELETE FROM "item" WHERE "id" = $1;`, [req.params.id])
-    .then(res.sendStatus(200))
-    .catch(error => {
-        res.sendStatus(500);
-    })
+        .then(res.sendStatus(200))
+        .catch(error => {
+            res.sendStatus(500);
+        })
 });
 
 
@@ -46,10 +46,10 @@ router.put('/', (req, res) => {
     SET "description" = $1,
     "image_url" = $2
     WHERE "id" = $3;`, [req.body.description, req.body.image_url, req.body.id])
-    .then(res.sendStatus(200))
-    .catch(error => {
-        res.sendStatus(500);
-    })    
+        .then(res.sendStatus(200))
+        .catch(error => {
+            res.sendStatus(500);
+        })
 });
 
 
