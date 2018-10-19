@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import Nav from '../../components/Nav/Nav';
 import { fetchTotals } from '../../redux/actions/totalAction';
 import { addItem } from '../../redux/actions/addAction';
+import { fetchDetails } from '../../redux/actions/detailAction'
 import axios from 'axios';
 import './UserDetail.css'
 
 const mapStateToProps = state => ({
   user: state.user,
-  userTotal: state.totalReducer
+  userDetail: state.detailReducer
 });
 
 class UserDetail extends Component {
@@ -23,15 +24,7 @@ class UserDetail extends Component {
 
   //trigger a /user call
   componentDidMount() {
-    axios({
-        method: 'GET',
-        url: `/api/userDetail/${this.props.match.params.id}`
-    }).then(response => {
-      console.log(response.data);
-      this.setState({
-        user:response.data[0]
-      })
-    })
+    this.props.dispatch(fetchDetails(this.props.match.params.id))
 }
 
   componentDidUpdate() {
@@ -48,7 +41,7 @@ class UserDetail extends Component {
         <div>
           <h1> User's Shelf Items</h1>
           <div className="cardsContainers">
-          {this.state.user.items.map((item) => {
+          {this.props.userDetail.items.map((item) => {
             
             return (
             <div className="card" key={item.id}>
@@ -57,7 +50,7 @@ class UserDetail extends Component {
                 <h2>Description: <p>{item.description}</p></h2>
             </div>
             )   
-        })}
+          })}
         </div>
           
     </div>

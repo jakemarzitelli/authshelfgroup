@@ -4,6 +4,7 @@ import loginSaga from './loginSaga';
 import shelfViewSaga from './shelfViewSaga';
 import shelfAddSaga from './shelfAddSaga';
 import totalsSaga from './totalsSaga';
+import detailSaga from './detailSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -12,6 +13,7 @@ export default function* rootSaga() {
     loginSaga(),
     // watchIncrementAsync()
     shelfAddSaga(),
-    totalsSaga()
+    totalsSaga(),
+    detailSaga(),
   ]);
 }
