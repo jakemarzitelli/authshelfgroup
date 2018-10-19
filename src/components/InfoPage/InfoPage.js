@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import { addItem } from '../../redux/actions/addAction';
+
+import Nav from '../../components/Nav/Nav';
 
 const mapStateToProps = state => ({
   user: state.user,
 });
 
 class InfoPage extends Component {
+
+  state = {
+    description: '',
+    image_url: ''
+  }
+
   //trigger a /user call
   componentDidMount() {
     this.props.dispatch({type: USER_ACTIONS.FETCH_USER});
@@ -22,9 +29,7 @@ class InfoPage extends Component {
     }
   }
 
-  state = { description: '',
-            image_url: ''
-}
+  
 
 handleClick = (event) => {
   event.preventDefault();

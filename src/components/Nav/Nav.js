@@ -13,28 +13,34 @@ class Nav extends Component {
     this.props.dispatch(triggerLogout());
   }
 
+  goToRegister = () => {
+    this.props.history.push('/register');
+  }
+
 render() {
   return (
     <div className="navbar">
     <div>
+
+      {this.props.user.userName
+      ?
       <ul>
-        <li>
-          <Link to="/user">
-            User Home
-          </Link>
-        </li>
-        <li>
-          <Link to="/info">
-            Info Page
-          </Link>
-        </li>
-        <li>
-          <Link to="total">
-          Total Page
-          </Link>
-        </li>
-        {this.props.user.userName
-        ?
+      {/* The non-logged in nav */}
+          <li>
+            <Link to="/user">
+              User Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/info">
+              Info Page
+            </Link>
+          </li>
+          <li>
+            <Link to="total">
+            Total Page
+            </Link>
+          </li>
           <li style={{float: "right"}}>
           Logged in as: {this.props.user.userName}
           <br />
@@ -45,10 +51,22 @@ render() {
               </button>
 
           </li>
-        :
-          null
-        }
-      </ul>
+        </ul>
+      :
+      <ul>
+      {/* The non-logged in nav */}
+          <li>
+            <Link to="/user">
+              User Home
+            </Link>
+          </li>
+        <li style={{float: "right"}}>
+        <Link to="/register">
+          Register            
+        </Link>
+        </li>
+        </ul> 
+      }
     </div>
   </div>
   )
